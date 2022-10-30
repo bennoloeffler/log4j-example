@@ -1,0 +1,54 @@
+
+<!-- WILL BE COPIED to: build/ressources/main... on the classpath... -->
+<!-- or start with java -Dlog4j.configurationFile=log4j2.xml xyz.jar -->
+
+<Configuration status="info" monitorInterval="1">
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/> -->
+            <PatternLayout pattern="%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} %highlight{[%-5level]}{FATAL=red, ERROR=red, WARN=yellow bold, INFO=white, DEBUG=green bold, TRACE=blue} %msg - %logger{36}.%M (%F:%L)%n"/>
+        </Console>
+
+        <RollingFile name="CreamRollingFile" fileName="logs/${sys:user.name}/cream.log" immediateFlush="true"
+                     filePattern="logs/${sys:user.name}/cream_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout>
+                <!--<pattern>%d{dd.MM.yyyy HH:mm:ss}- %c{1}: %m%n</pattern>-->
+                <pattern>%d{HH:mm:ss.SSS} [%-5level] %msg - %logger{36}.%M (%F:%L)%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="20 MB" />
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy />
+        </RollingFile>
+
+    </Appenders>
+
+
+    <Loggers>
+
+        <!-- **************************************************** -->
+        <!-- LOG LEVELS off fatal error warn info debug trace all -->
+        <!-- **************************************************** -->
+
+
+
+        <!--
+        <Logger name="bel.log4j.bug.App" level="trace" additivity="false">
+            <MarkerFilter marker="MARKER" onMatch="ACCEPT" onMismatch="DENY"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="CreamRollingFile"/>
+        </Logger>
+        -->
+
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="CreamRollingFile"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
